@@ -1,0 +1,40 @@
+package symbols; // Archivo Tipo.java
+//es una subclase de palabra.java
+import analizadorLexico.*;
+//los nombres de los tipos básicos como int son sólo palabras reservadas, 
+//que el analizador léxico asigna de los lexemas a los objetos apropiados.
+public class Tipo extends Palabra {
+
+    public int anchura = 0; // anchura se usa para asignacion de almacenamiento
+
+    public Tipo(String s, int etiqueta, int w) {
+        super(s, etiqueta);
+        anchura = w;
+    }
+
+    public static final Tipo Int = new Tipo("int", Etiqueta.BASIC, 4),
+//Los objetos para los tipos básicos son Tipo.Int, Tipo.Float, Tipo. Char y Tipo.Bool
+            Float = new Tipo("float", Etiqueta.BASIC, 8),
+            Char = new Tipo("char", Etiqueta.BASIC, 1),
+            Bool = new Tipo("bool", Etiqueta.BASIC, 1);
+
+    public static boolean numerico(Tipo p) {//Las funciones numerico
+        if (p == Tipo.Char || p == Tipo.Int || p == Tipo.Float) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static Tipo max(Tipo p1, Tipo p2) {//son útiles para las conversiones de tipos.
+        if (!numerico(p1) || !numerico(p2)) {
+            return null;
+        } else if (p1 == Tipo.Float || p2 == Tipo.Float) {
+            return Tipo.Float;
+        } else if (p1 == Tipo.Int || p2 == Tipo.Int) {
+            return Tipo.Int;
+        } else {
+            return Tipo.Char;
+        }
+    }
+}
